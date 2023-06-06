@@ -4,8 +4,8 @@ import {
   Settings,
 } from '@google-cloud/firestore';
 import { DynamicModule, FactoryProvider, Module } from '@nestjs/common';
-import { FIRESTORE_SETTINGS } from '@util/tokens';
-import { CollectionProvider } from '@util/types';
+import { FIRESTORE_SETTINGS } from '../util/tokens';
+import { CollectionProvider } from '../util/types';
 import { FirestoreModuleForRootAsyncOptions } from './firestore-module-options.dto';
 import { getCollectionToken } from './utilities';
 
