@@ -1,8 +1,8 @@
 {
-  "name": "<YOUR_LIB_NAME>",
+  "name": "@cristobalgvera/nestjs-firestore",
   "version": "0.0.1",
-  "author": "<YOUR_NAME> <<YOU_EMAIL>>",
-  "description": "<YOUR_DESCRIPTION>",
+  "author": "Cristóbal Gajardo Vera <cristobalgajardo.v@gmail.com>",
+  "description": "Use Firestore with NestJS using injectable collection services",
   "private": false,
   "license": "MIT",
   "main": "dist/index.js",
@@ -55,10 +55,12 @@
     "tsconfig-paths": "4.2.0",
     "typescript": "^5.1.3"
   },
-  "keywords": ["nestjs"],
+  "keywords": [
+    "nestjs"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<YOUR_USER>/<YOUR_REPO>"
+    "url": "git+https://github.com/cristobalgvera/nestjs-firestore"
   },
-  "homepage": "https://github.com/<YOUR_USER>/<YOUR_REPO>"
+  "homepage": "https://github.com/cristobalgvera/nestjs-firestore"
 }
