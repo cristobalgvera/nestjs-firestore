@@ -1,9 +1,9 @@
-import { getCollectionToken } from '@lib/utilities';
 import { Inject } from '@nestjs/common';
+import { getCollectionToken } from '../utilities';
 import { InjectCollection } from './inject-collection.decorator';
 
-jest.mock('@lib/utilities', () => ({
-  ...jest.requireActual('@lib/utilities'),
+jest.mock('../utilities', () => ({
+  ...jest.requireActual('../utilities'),
   getCollectionToken: jest.fn(),
 }));
 

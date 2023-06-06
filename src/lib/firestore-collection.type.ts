@@ -1,5 +1,5 @@
 import { CollectionReference } from '@google-cloud/firestore';
-import { ClassProperties } from '@util/types';
+import { ClassProperties } from '../util/types';
 
 /**
  * Type a `CollectionReference` with a collection defined as class.
