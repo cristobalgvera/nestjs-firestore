@@ -1,6 +1,6 @@
 {
   "name": "@cristobalgvera/nestjs-firestore",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Cristóbal Gajardo Vera <cristobalgajardo.v@gmail.com>",
   "description": "Use Firestore with NestJS using injectable collection services",
   "private": false,
