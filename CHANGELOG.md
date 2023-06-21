@@ -1,5 +1,11 @@
 # @cristobalgvera/nestjs-firestore
 
+## 0.0.5
+
+### Patch Changes
+
+- 98f489d: Add README.md
+
 ## 0.0.4
 
 ### Patch Changes
