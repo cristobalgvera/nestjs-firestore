@@ -1,4 +1,4 @@
-# YOUR_LIBRARY_NAME
+# NestJS Firebase
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank">
@@ -6,40 +6,126 @@
   </a>
 </p>
 
-Give a brief explanation of what is the purpose and benefits of this library.
+This project helps you to use your Firestore collections in a well known way,
+similar\* to how TypeORM lets you to handle your tables.
 
-Example:
+The principal benefits are:
 
-Configuration library that allows you to easily setup and validate your...
+- Model your collections using classes (similar on how ORMs works).
+- Simplify the testing of the Firestore SDK.
 
-- First benefit.
-- Second benefit.
-- And so on...
+_\*This is NOT an ORM._
 
 ## Installation
 
-Explain how to install your library.
-
-Example
+In order to install this package simply run the following command.
 
 ```bash
-npm install your-library
+npm install @cristobalgvera/nestjs-firestore
 ```
 
 ## Usage
 
-Explain how to use your library.
-
-Example:
-
 The simplest way to use it is the following:
 
-1. Create the `value` using `myFunction`.
+1. Import the `FirestoreModule#forRoot` into your main module.
 
    ```ts
-   import { myFunction } from 'your-library';
+   import { FirestoreModule } from '@cristobalgvera/nestjs-firestore';
+   import { Module } from '@nestjs/common';
 
-   const myValue = myFunction('It make something great!');
+   @Module({
+     imports: [
+       FirestoreModule.forRootAsync({
+         useFactory: (environmentService: EnvironmentService) => ({
+           // You can define custom properties here, see https://github.com/googleapis/nodejs-firestore
+           projectId: 'firebase-project-id',
+         }),
+       }),
+     ],
+   })
+   export class AppModule {}
+   ```
 
-   return myValue;
+1. Define your model (currently only classes are supported).
+
+   ```ts
+   export class User {
+     name: string;
+     age: number;
+   }
+   ```
+
+1. Import the `FirestoreModule#forFeature` into your feature module.
+
+   ```ts
+   import { FirestoreModule } from '@cristobalgvera/nestjs-firestore';
+   import { Module } from '@nestjs/common';
+   import { User } from './user.collection';
+
+   @Module({
+     imports: [
+       FirestoreModule.forFeature([
+         { collection: User, path: 'path-to-your-collection' },
+       ]),
+     ],
+   })
+   export class UserModule {}
+   ```
+
+1. Inject the collection into your services using the `InjectCollection` decorator
+   and the `FirestoreCollection` type. The `FirestoreCollection` needs a generic
+   class (soon type or interface too) in order to type your collection.
+
+   The `FirestoreCollection` is a wrapper on top of the `CollectionReference` type
+   provided by `@google-cloud/firestore`, so you can use the entire API, but it
+   will provide correct typing based in the collection class.
+
+   ```ts
+   import {
+     FirestoreCollection,
+     InjectCollection,
+   } from '@cristobalgvera/nestjs-firestore';
+   import { Injectable } from '@nestjs/common';
+   import { User } from './user.collection';
+
+   @Injectable()
+   export class UserService {
+     constructor(
+       @InjectCollection(User)
+       private readonly userCollection: FirestoreCollection<User>,
+     ) {}
+
+     saveUser({ name, age }: SaveUserDto) {
+       return this.userCollection.add({ name, age });
+     }
+   }
+   ```
+
+1. Test it using the `getCollectionToken` to get the token used to inject the collection
+   in the service.
+
+   ```ts
+   import { TestBed } from '@automock/jest';
+   import {
+     FirestoreCollection,
+     getCollectionToken,
+   } from '@cristobalgvera/nestjs-firestore';
+   import { User } from './user.collection';
+   import { UserService } from './user.service';
+
+   describe('UserService', () => {
+     let underTest: UserService;
+     let userCollection: FirestoreCollection<User>;
+
+     beforeEach(() => {
+       // Don't focus on how to create the context of the test
+       const { unit, unitRef } = TestBed.create(UserService).compile();
+       underTest = unit;
+
+       userCollection = unitRef.get(getCollectionToken(User)); // <-- THIS IS THE IMPORTANT PART
+     });
+
+     /* Your tests here... */
+   });
    ```
