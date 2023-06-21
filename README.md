@@ -1,4 +1,4 @@
-# NestJS Firebase
+# NestJS Firestore
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank">
