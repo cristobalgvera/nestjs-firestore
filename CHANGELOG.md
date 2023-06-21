@@ -1,5 +1,12 @@
 # @cristobalgvera/nestjs-firestore
 
+## 0.0.4
+
+### Patch Changes
+
+- 86da9ae: Update dependencies
+- b213739: Add support to @nestjs/common v10
+
 ## 0.0.3
 
 ### Patch Changes
